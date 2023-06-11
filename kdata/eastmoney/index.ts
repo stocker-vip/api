@@ -1,6 +1,8 @@
+import { EventSourceControl} from 'https://cdn.jsdelivr.net/gh/stocker-vip/utils@v0.0.5/mod.ts'
+import { Subject } from 'npm:rxjs'
 import { Kdata, Minute } from "../../common.ts";
-import { EastmoneyKlineData } from "./type.ts";
-import { klineUrl } from "./url.ts";
+import { Allstocks, EastmoneyKlineData } from "./type.ts";
+import { ListUrl, TickUrl, klineUrl } from "./url.ts";
 
 export const EastmoneyKline = ( count: number ) => ( minute: Minute ) => async ( code: string ) =>
 {
@@ -20,4 +22,26 @@ export const convertKline = ( data: string ) =>
         low: Number( low ),
         volume: Number( volume )
     } as Kdata
+}
+
+
+export const AllStocks = async ()=>{
+    const url = ListUrl()
+    const res = await fetch(url)
+    return  await res.json() as Allstocks.Root
+}
+
+export const TickFactor =(code:string)=>{
+    const url = TickUrl()(code)
+    const subject = new Subject<string>()
+    const es = new EventSourceControl(url,{
+        message: (msg)=>{
+            subject.next(msg.data)
+        }
+    })
+    return {
+        start:()=> es.start(),
+        stop:()=> es.stop(),
+        data:()=> subject.asObservable()
+    }
 }

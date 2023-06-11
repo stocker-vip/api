@@ -1,4 +1,4 @@
-// deno-lint-ignore-file prefer-namespace-keyword
+// deno-lint-ignore-file prefer-namespace-keyword no-namespace
 export declare module EastmoneyKlineData {
 
     export interface Data {
@@ -20,4 +20,51 @@ export declare module EastmoneyKlineData {
         dlmkts: string;
         data: Data;
     }
+}
+
+export namespace Allstocks {
+    export interface Root {
+        rc: number
+        rt: number
+        svr: number
+        lt: number
+        full: number
+        dlmkts: string
+        data: Data
+      }
+      
+      export interface Data {
+        total: number
+        diff: Diff[]
+      }
+      
+      export interface Diff {
+        f2:number;
+        f3:number;
+        f17:number;
+        f12: string
+        f14: string
+        f20:number;
+        f21:number;
+      }
+}
+
+export namespace Tick {
+    export interface Root {
+        rc: number
+        rt: number
+        svr: number
+        lt: number
+        full: number
+        dlmkts: string
+        data: Data
+      }
+      
+      export interface Data {
+        code: string
+        market: number
+        decimal: number
+        prePrice: number
+        details: string[]
+      }
 }
