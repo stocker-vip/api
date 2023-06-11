@@ -2,7 +2,7 @@ import { Minute } from "../../common.ts";
 import { SinaKlineToKline, SinaRoot } from "./type.ts";
 import { Url } from "./url.ts";
 
-export const klineFetch =
+export const SinaKline =
     ( count: number ) =>
         ( minute: Minute ) =>
             async ( code: string ) =>
