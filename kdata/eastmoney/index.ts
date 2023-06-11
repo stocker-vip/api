@@ -1,7 +1,7 @@
 import { EventSourceControl} from 'https://cdn.jsdelivr.net/gh/stocker-vip/utils@v0.0.5/mod.ts'
 import { Subject } from 'npm:rxjs'
 import { Kdata, Minute } from "../../common.ts";
-import { Allstocks, EastmoneyKlineData } from "./type.ts";
+import { Allstocks, EastmoneyKlineData,Tick } from "./type.ts";
 import { ListUrl, TickUrl, klineUrl } from "./url.ts";
 
 export const EastmoneyKline = ( count: number ) => ( minute: Minute ) => async ( code: string ) =>
@@ -33,7 +33,7 @@ export const AllStocks = async ()=>{
 
 export const TickFactor =(code:string)=>{
     const url = TickUrl()(code)
-    return EventSourceFactor(url)
+    return EventSourceFactor<Tick.Root>(url)
 }
 
 export const EventSourceFactor =<T>(url:string)=>{
