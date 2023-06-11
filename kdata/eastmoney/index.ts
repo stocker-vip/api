@@ -47,12 +47,12 @@ export const TickFactor = ( code: string ) =>
             state: state
         }
     }
-    const data2 = data().pipe(
+    const data2 = () => data().pipe(
         filter( it => !!it.data ),
         map( it => it.data.details ),
         switchMap( it => from( it ) ),
         distinct(),
-        map(it=>deal(it))
+        map( it => deal( it ) )
     )
     return {
         start,
