@@ -33,10 +33,15 @@ export const AllStocks = async ()=>{
 
 export const TickFactor =(code:string)=>{
     const url = TickUrl()(code)
-    const subject = new Subject<string>()
+    return EventSourceFactor(url)
+}
+
+export const EventSourceFactor =<T>(url:string)=>{
+    const subject = new Subject<T>()
     const es = new EventSourceControl(url,{
         message: (msg)=>{
-            subject.next(msg.data)
+            const data =JSON.parse(msg.data) as T
+            subject.next(data)
         }
     })
     return {
