@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-namespace
 import { Kdata } from "../../common.ts"
 
 export interface SinaRoot
@@ -36,4 +37,34 @@ export const SinaKlineToKline = ( data: Daum ): Kdata =>
         close: Number( data.close ),
         volume: Number( data.volume )
     }
+}
+
+
+export namespace L2Tick {
+    export interface Root {
+        result: Result
+      }
+      
+      export interface Result {
+        status: Status
+        data: Data
+      }
+      
+      export interface Status {
+        code: number
+      }
+      
+      export interface Data {
+        data: Daum[]
+        transid: string
+      }
+      
+      export interface Daum {
+        id: string
+        time: string
+        price: string
+        vol: string
+        state: string
+        index: string
+      }
 }

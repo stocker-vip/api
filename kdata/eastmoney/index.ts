@@ -1,8 +1,8 @@
 import { EventSourceControl } from 'https://cdn.jsdelivr.net/gh/stocker-vip/utils@v0.0.5/mod.ts'
-import { Subject, distinct, filter, from, map, switchMap } from 'npm:rxjs'
+import { Subject, distinct, filter, from, map, switchMap, interval } from 'npm:rxjs'
 import { Kdata, Minute } from "../../common.ts";
-import { Allstocks, EastmoneyKlineData, Tick } from "./type.ts";
-import { ListUrl, TickUrl, klineUrl } from "./url.ts";
+import { Allstocks, EastmoneyKlineData, OneMinuteStruct, Tick } from "./type.ts";
+import { ListUrl, OneMinuteUrl$, TickUrl, klineUrl } from "./url.ts";
 
 export const EastmoneyKline = ( count: number ) => ( minute: Minute ) => async ( code: string ) =>
 {
@@ -58,6 +58,44 @@ export const TickFactor = ( code: string ) =>
         start,
         stop,
         data: data2
+    }
+}
+
+interface OneMineType
+{
+    time: string;
+    open: number;
+    close: number;
+    high: number;
+    low: number;
+    vol: number;
+    money: number;
+
+}
+export const OneMinute$ = ( code: string ) =>
+{
+    const url = OneMinuteUrl$()( code );
+    const { start, stop, data } = EventSourceFactor<OneMinuteStruct.Root>( url )
+    return {
+        start,
+        stop,
+        data: data().pipe(
+            filter( it => !!it.data?.trends ),
+            map( it => it.data.trends ),
+            map<string[], OneMineType[]>( it => it.map( item =>
+            {
+                const [ time, openValue, closeValue, highValue, lowValue, volValue, moneyValue ] = item.split( ',' );
+                return {
+                    time,
+                    open: Number( openValue ),
+                    close: Number( closeValue ),
+                    high: Number( highValue ),
+                    low: Number( lowValue ),
+                    vol: Number( volValue ),
+                    money: Number( moneyValue )
+                }
+            } ) )
+        )
     }
 }
 

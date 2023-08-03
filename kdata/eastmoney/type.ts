@@ -68,3 +68,38 @@ export namespace Tick {
         details: string[]
       }
 }
+
+export namespace OneMinuteStruct {
+  export interface Root {
+    rc: number
+    rt: number
+    svr: number
+    lt: number
+    full: number
+    dlmkts: string
+    data: Data
+  }
+  
+  export interface Data {
+    code: string
+    market: number
+    type: number
+    status: number
+    name: string
+    decimal: number
+    preSettlement: number
+    preClose: number
+    beticks: string
+    trendsTotal: number
+    time: number
+    kind: number
+    prePrice: number
+    hisPrePrices: HisPrePrice[]
+    trends: string[]
+  }
+  
+  export interface HisPrePrice {
+    date: number
+    prePrice: number
+  }
+}

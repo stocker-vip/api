@@ -38,3 +38,6 @@ export const klineUrl = (code: string, minute: Minute,count:number) =>{
 
 //  获取列表
  export const ListUrl =(param:string="f20,f21,f12,f14,f3,f17,f2") => `http://89.push2.eastmoney.com/api/qt/clist/get?pn=1&pz=8000&po=1&np=1&ut=bd1d9ddb04089700cf9c27f6f7426281&fltt=2&invt=2&wbp2u=6084345704571452|0|1|0|web&fid=f3&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23,m:0+t:81+s:2048&fields=${param}`
+
+//  获取1分钟数据流
+export const OneMinuteUrl$ = (param:string="f51,f52,f53,f54,f55,f56,f57,f58") =>(code:string)=>`https://48.push2his.eastmoney.com/api/qt/stock/trends2/sse?fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f17&fields2=${param}&mpi=1000&ut=fa5fd1943c7b386f172d6893dbfba10b&secid=${codeWithNumber(code)}&ndays=5&iscr=0&iscca=0`
