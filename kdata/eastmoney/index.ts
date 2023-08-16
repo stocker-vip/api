@@ -1,5 +1,5 @@
 import { EventSourceControl } from 'https://cdn.jsdelivr.net/gh/stocker-vip/utils@v0.0.5/mod.ts'
-import { Subject, distinct, filter, from, map, switchMap, interval } from 'npm:rxjs'
+import { Subject, distinct, filter, from, map, switchMap } from 'npm:rxjs'
 import { Kdata, Minute } from "../../common.ts";
 import { Allstocks, EastmoneyKlineData, OneMinuteStruct, Tick } from "./type.ts";
 import { ListUrl, OneMinuteUrl$, TickUrl, klineUrl } from "./url.ts";
